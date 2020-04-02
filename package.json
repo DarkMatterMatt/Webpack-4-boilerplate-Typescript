@@ -2,13 +2,13 @@
   "name": "webpack-4-boilerplate",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "npm run build:dev",
     "build:dev": "webpack-dev-server --env dev --mode none",
     "build:prod": "webpack --env prod --mode production"
   },
-  "author": "mwieth",
+  "author": "Matt Moran",
   "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^8.6.0",

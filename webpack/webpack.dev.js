@@ -1,55 +1,49 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-const {
-  prod_Path,
-  src_Path
-} = require('./path');
-const {
-  selectedPreprocessor
-} = require('./loader');
+const paths = require("./paths");
 
 module.exports = {
   entry: {
-    main: './' + src_Path + '/index.ts'
+    main: "./" + paths.src + "/index.ts"
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: [".ts", ".js"]
   },
   output: {
-    path: path.resolve(__dirname, prod_Path),
-    filename: '[name].[chunkhash].js'
+    path: path.resolve(__dirname, paths.prod),
+    filename: "[name].[chunkhash].js"
   },
-  devtool: 'source-map',
+  devtool: "source-map",
   devServer: {
     open: true,
   },
   module: {
     rules: [{
       test: /\.ts?$/,
-      use: 'ts-loader',
+      use: "ts-loader",
       exclude: /node_modules/
     }, {
-      test: selectedPreprocessor.fileRegexp,
+      test: /\.(sass|scss|css)$/,
       use: [{
           loader: MiniCssExtractPlugin.loader
         },
         {
-          loader: 'css-loader',
+          loader: "css-loader",
           options: {
             modules: false,
             sourceMap: true
           }
         },
         {
-          loader: 'postcss-loader',
+          loader: "postcss-loader",
           options: {
             sourceMap: true
           }
         },
         {
-          loader: selectedPreprocessor.loaderName,
+          loader: "sass-loader",
           options: {
             sourceMap: true
           }
@@ -59,13 +53,13 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'style.css'
+      filename: "style.css"
     }),
     new HtmlWebpackPlugin({
       inject: false,
       hash: false,
-      template: './' + src_Path + '/index.html',
-      filename: 'index.html'
+      template: "./" + paths.src + "/index.html",
+      filename: "index.html"
     })
   ]
 };

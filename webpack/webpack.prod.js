@@ -4,18 +4,17 @@ const WebpackMd5Hash = require("webpack-md5-hash");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 
-const { prod_Path, src_Path } = require("./path");
-const { selectedPreprocessor } = require("./loader");
+const paths = require("./paths");
 
 module.exports = {
   entry: {
-    main: "./" + src_Path + "/index.ts"
+    main: "./" + paths.src + "/index.ts"
   },
   resolve: {
     extensions: [".ts", ".js"]
   },
   output: {
-    path: path.resolve(__dirname, prod_Path),
+    path: path.resolve(__dirname, paths.prod),
     filename: "[name].[chunkhash].js"
   },
   //devtool: 'source-map',
@@ -27,7 +26,7 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: selectedPreprocessor.fileRegexp,
+        test: /\.(sass|scss|css)$/,
         use: [
           {
             loader: MiniCssExtractPlugin.loader
@@ -39,14 +38,14 @@ module.exports = {
             loader: "postcss-loader"
           },
           {
-            loader: selectedPreprocessor.loaderName
+            loader: "sass-loader"
           }
         ]
       }
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(path.resolve(__dirname, prod_Path), {
+    new CleanWebpackPlugin(path.resolve(__dirname, paths.prod), {
       root: process.cwd()
     }),
     new MiniCssExtractPlugin({
@@ -54,8 +53,8 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       inject: false,
-      hash: true,
-      template: "./" + src_Path + "/index.html",
+      hash: false,
+      template: "./" + paths.src + "/index.html",
       filename: "index.html"
     }),
     new WebpackMd5Hash()
