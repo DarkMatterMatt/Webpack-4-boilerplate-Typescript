@@ -1,7 +1,8 @@
-import './styles/style.scss';
+import "./styles/style.scss";
 
-console.log('hello, world');
+console.log("hello, world");
 
-const testMessage: string = 'TypeScript works';
+// eslint-disable-next-line @typescript-eslint/no-inferrable-types
+const testMessage: string = "TypeScript works";
 
 console.log(testMessage);

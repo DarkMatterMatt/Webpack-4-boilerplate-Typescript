@@ -1,4 +1,6 @@
+const autoprefixer = require("autoprefixer");
+
 module.exports = {
-  plugins: [require('autoprefixer')],
-  browsers: ['> 0.25%', 'ie >= 11']
+    plugins:  [autoprefixer],
+    browsers: ["> 0.25%", "ie >= 11"],
 };
